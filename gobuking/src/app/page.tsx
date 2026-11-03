@@ -4,6 +4,7 @@ import { SearchPanel } from '@/features/home/components/search-panel';
 import { HomeContent } from '@/features/home/components/home-content';
 import { Deals } from '@/features/home/components/deals';
 import { TrustSection } from '@/features/home/components/trust-section';
+import { ServiceCards } from '@/features/home/components/service-cards';
 export default async function HomePage() {
   const { t } = await getI18n();
   return (
@@ -22,6 +23,7 @@ export default async function HomePage() {
         <span className="hidden text-border sm:block">/</span>
         <span>{t('\u2713 Informasi harga yang jelas')}</span>
       </div>
+      <ServiceCards />
       <Deals />
       <Suspense
         fallback={<div className="page-container skeleton h-60 rounded-xl" />}

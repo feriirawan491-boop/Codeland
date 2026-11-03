@@ -1,4 +1,9 @@
 import { publicVenues } from '@/features/catalog/lib/runtime';
+import {
+  DEMO_LOCATION_DETAILS,
+  DEMO_MIN_LISTINGS_PER_LOCATION,
+} from '@/features/catalog/lib/demo-locations';
+import { LOCATIONS } from '@/features/home/lib/search';
 import type { Venue, VenueSpace, VenuePackage } from './types';
 import { datePlus } from '@/features/hotel/lib/query';
 function packages(id: string, index: number): VenuePackage[] {
@@ -204,20 +209,92 @@ const definitions: [string, string, string, string, VenueSpace[]][] = [
     [space('juanda-hall', 'Juanda Conference Hall', 200, 120, 3)],
   ],
 ];
-export const VENUE_FIXTURES: Venue[] = definitions.map(
-  ([id, name, locationId, area, spaces]) => ({
-    id,
-    name,
-    locationId,
-    area,
-    zone: locationId === 'bali' ? 'Asia/Makassar' : 'Asia/Jakarta',
-    offset: locationId === 'bali' ? 8 : 7,
-    description:
-      'Ruang untuk bertemu, berbagi ide, dan merencanakan langkah berikutnya. Pilih ruang serta paket sesuai kebutuhan acara Anda.',
-    pic: { name: 'Tim Venue Sales Demo', team: name },
-    spaces: spaces.map((s) => ({ ...s, venueId: id })),
-  }),
-);
+export const VENUE_FIXTURES: Venue[] = (() => {
+  const rows: Venue[] = definitions.map(
+    ([id, name, locationId, area, spaces]) => ({
+      id,
+      name,
+      locationId,
+      area,
+      zone: locationId === 'bali' ? 'Asia/Makassar' : 'Asia/Jakarta',
+      offset: locationId === 'bali' ? 8 : 7,
+      description:
+        'Ruang untuk bertemu, berbagi ide, dan merencanakan langkah berikutnya. Pilih ruang serta paket sesuai kebutuhan acara Anda.',
+      pic: { name: 'Tim Venue Sales Demo', team: name },
+      spaces: spaces.map((s) => ({ ...s, venueId: id })),
+    }),
+  );
+  const templateVenue = rows.find((venue) => venue.id === 'meridian');
+  const templateSpace = templateVenue?.spaces.find(
+    (value) => value.id === 'angsana-ballroom',
+  );
+  if (!templateVenue || !templateSpace)
+    throw new Error('Missing venue demo template.');
+
+  for (const location of LOCATIONS) {
+    let count = rows
+      .filter((venue) => venue.locationId === location.id)
+      .flatMap((venue) => venue.spaces)
+      .filter((value) => value.services.includes('mice')).length;
+    let weddingCount = rows
+      .filter((venue) => venue.locationId === location.id)
+      .flatMap((venue) => venue.spaces)
+      .filter(
+        (value) =>
+          value.services.includes('wedding') &&
+          (value.capacity.banquet ?? 0) >= 80,
+      ).length;
+
+    while (
+      count < DEMO_MIN_LISTINGS_PER_LOCATION ||
+      weddingCount < DEMO_MIN_LISTINGS_PER_LOCATION
+    ) {
+      const details = DEMO_LOCATION_DETAILS[location.id];
+      const id = `demo-${location.id}-venue-${count + 1}`;
+      const venueId = `demo-venue-${location.id}-${count + 1}`;
+      const space = structuredClone(templateSpace);
+      space.id = id;
+      space.slug = id;
+      space.venueId = venueId;
+      space.name = `${location.label} Demo Event Hall ${count + 1}`;
+      space.area = 700;
+      space.capacity = {
+        theater: 600,
+        classroom: 350,
+        boardroom: 40,
+        ushape: 200,
+        banquet: 400,
+        standing: 700,
+      };
+      space.resourceId = `venue:${id}`;
+      space.services = ['mice', 'wedding'];
+      space.blocks = [];
+      space.packages = space.packages.map((value, index) => ({
+        ...value,
+        id: `${id}-package-${index + 1}`,
+      }));
+
+      rows.push({
+        ...structuredClone(templateVenue),
+        id: venueId,
+        name: `${location.label} Demo Event Venue ${count + 1}`,
+        locationId: location.id,
+        area: details.area,
+        zone: details.zone,
+        offset: details.offset,
+        pic: {
+          name: 'Tim Venue Demo',
+          team: `${location.label} Demo Event Venue ${count + 1}`,
+        },
+        spaces: [space],
+      });
+      count += 1;
+      weddingCount += 1;
+    }
+  }
+
+  return rows;
+})();
 export function findFixtureSpace(id: string) {
   for (const venue of publicVenues()) {
     const space = venue.spaces.find((s) => s.id === id || s.slug === id);

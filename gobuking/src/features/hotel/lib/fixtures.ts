@@ -1,4 +1,9 @@
 import type { Hotel, HotelRoom, HotelReview } from './types';
+import {
+  demoLocationDetails,
+  DEMO_MIN_LISTINGS_PER_LOCATION,
+} from '@/features/catalog/lib/demo-locations';
+import { LOCATIONS } from '@/features/home/lib/search';
 const reviews: HotelReview[] = [
   {
     id: 'r1',
@@ -322,28 +327,59 @@ const definitions = [
     | 'reviews'
   > & { price: number }
 >;
-export const HOTEL_FIXTURES: Hotel[] = definitions.map((h, index) => ({
-  ...h,
-  coordinates: [...h.coordinates],
-  description:
-    'Nikmati waktu beristirahat di ruang yang nyaman dengan suasana hangat. Akses mudah ke area sekitar, fasilitas pilihan, dan layanan mitra membantu Anda menikmati perjalanan dengan lebih leluasa.',
-  distance: Number((0.6 + index * 0.35).toFixed(1)),
-  checkIn: index % 2 === 0 ? '14:00' : '15:00',
-  checkOut: index % 3 === 0 ? '11:00' : '12:00',
-  zone:
-    h.locationId === 'bali' || h.locationId === 'lombok'
-      ? 'Asia/Makassar'
-      : 'Asia/Jakarta',
-  rooms: rooms(h.price).map((room) => ({
-    ...room,
-    resourceId: `${h.id}:${room.id}`,
-    stock: h.id === 'seruni' && room.id === 'suite' ? 1 : room.stock,
-  })),
-  reviews:
-    h.score === null
-      ? []
-      : reviews.map((review, i) => ({
-          ...review,
-          score: Number((h.score! + [0.3, 0, -0.3][i]).toFixed(1)),
-        })),
-}));
+export const HOTEL_FIXTURES: Hotel[] = (() => {
+  const rows: Hotel[] = definitions.map((h, index) => ({
+    ...h,
+    coordinates: [...h.coordinates],
+    description:
+      'Nikmati waktu beristirahat di ruang yang nyaman dengan suasana hangat. Akses mudah ke area sekitar, fasilitas pilihan, dan layanan mitra membantu Anda menikmati perjalanan dengan lebih leluasa.',
+    distance: Number((0.6 + index * 0.35).toFixed(1)),
+    checkIn: index % 2 === 0 ? '14:00' : '15:00',
+    checkOut: index % 3 === 0 ? '11:00' : '12:00',
+    zone: demoLocationDetails(h.locationId).zone,
+    rooms: rooms(h.price).map((room) => ({
+      ...room,
+      resourceId: `${h.id}:${room.id}`,
+      stock: h.id === 'seruni' && room.id === 'suite' ? 1 : room.stock,
+    })),
+    reviews:
+      h.score === null
+        ? []
+        : reviews.map((review, i) => ({
+            ...review,
+            score: Number((h.score! + [0.3, 0, -0.3][i]).toFixed(1)),
+          })),
+  }));
+
+  for (const location of LOCATIONS) {
+    const details = demoLocationDetails(location.id);
+    const matchesLocation = (hotel: Hotel) =>
+      location.id === 'ubud'
+        ? hotel.area === details.area
+        : hotel.locationId === location.id;
+    let count = rows.filter(matchesLocation).length;
+    while (count < DEMO_MIN_LISTINGS_PER_LOCATION) {
+      const template = rows.find(matchesLocation) ?? rows[0];
+      if (!template)
+        throw new Error(`Missing hotel demo template for ${location.id}.`);
+      const id = `${location.id}-hotel-demo-${count + 1}`;
+      const hotel = structuredClone(template);
+      hotel.id = id;
+      hotel.slug = `${id}`;
+      hotel.name = `${location.label} ${['Garden Hotel', 'City Stay', 'Comfort Inn', 'Vista Resort', 'Central Suites'][count]}`;
+      hotel.locationId = location.id;
+      hotel.area = details.area;
+      hotel.address = `Area ${details.area}`;
+      hotel.coordinates = [...details.coordinates];
+      hotel.zone = details.zone;
+      hotel.rooms = hotel.rooms.map((room) => ({
+        ...room,
+        resourceId: `${id}:${room.id}`,
+      }));
+      rows.push(hotel);
+      count += 1;
+    }
+  }
+
+  return rows;
+})();

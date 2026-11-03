@@ -34,6 +34,63 @@ test('hotel search preserves draft across tabs and navigation', async ({
   await expect(page.locator('#hotel-locationId')).toHaveValue('Bali');
   await expect(page.locator('#hotel-end')).toHaveValue('2099-12-12');
 });
+test('homepage service cards open demo listings without filling the search form', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const section = page.getByRole('region', {
+    name: 'Jelajahi layanan Gobuking',
+  });
+  await expect(section.getByRole('link')).toHaveCount(6);
+
+  for (const [label, path, image] of [
+    ['Hotel', '/hotels?locationId=bali', '/images/hotel.jpg'],
+    ['Home Rental', '/homes?locationId=bali', '/images/villa.jpg'],
+    [
+      'Penerbangan',
+      '/flights?locationId=CGK&destinationId=DPS',
+      '/images/flight-demo.svg',
+    ],
+    [
+      'MICE',
+      '/mice?locationId=bali&flexible=true',
+      '/images/mice-conference.jpg',
+    ],
+    [
+      'Wedding',
+      '/wedding?locationId=bali&flexible=true',
+      '/images/wedding-garden.jpg',
+    ],
+    [
+      'Rental Mobil',
+      '/cars?locationId=bali&pickupArea=central',
+      '/images/car-city.jpg',
+    ],
+  ] as const) {
+    const card = section.getByRole('link', { name: new RegExp(label) });
+    await expect(card).toHaveAttribute(
+      'href',
+      new RegExp(`^${path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`),
+    );
+    await expect(card.locator('img')).toHaveAttribute(
+      'src',
+      new RegExp(
+        image.endsWith('.svg')
+          ? image.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+          : encodeURIComponent(image),
+      ),
+    );
+  }
+
+  await section.getByRole('link', { name: /Hotel/ }).click();
+  await expect(page).toHaveURL(/\/hotels\?locationId=bali/);
+  await expect(
+    page.getByRole('heading', {
+      name: 'Temukan tempat menginap di Bali',
+      exact: true,
+    }),
+  ).toBeVisible();
+});
 test('validation, flight category and flexible venue search', async ({
   page,
 }) => {

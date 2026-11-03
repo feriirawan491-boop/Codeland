@@ -27,7 +27,9 @@ Hentikan dev server dengan Ctrl+C sebelum memakai port yang sama untuk productio
 
 - Homepage dengan Bebas Neue 400 untuk headline dan Plus Jakarta Sans 400/500/600/700/800 untuk UI, seluruhnya lokal. Enam tab layanan, hero, pencarian dominan, penawaran, destinasi, jenis akomodasi, pilihan editorial, kemitraan, bantuan, dan footer.
 - Enam pencarian dengan parameter berbeda: penginapan, penerbangan sekali jalan/pulang pergi, MICE, wedding, dan rental mobil dengan interval jam.
+- Enam kartu layanan di beranda membuka daftar pilihan demo secara langsung tanpa harus mengisi form pencarian.
 - Autocomplete ID lokasi dengan debounce 300 ms dan keyboard; teks yang diedit membatalkan ID lama.
+- Dengan filter default, fixture demo menyediakan minimal lima hasil Hotel, Home Rental, MICE, Wedding, dan rental mobil di setiap wilayah yang dapat dipilih. Penerbangan menyediakan delapan penawaran demo pada setiap rute antarbendara yang valid.
 - React Hook Form + Zod: validasi tanggal, tamu dan usia anak hotel, bandara, peserta, area/jam rental.
 - Draft antar-tab, pemulihan URL, halaman ringkasan serah-terima untuk setiap kategori.
 - Properti favorit di localStorage: hanya ID publik, tanpa token/PII. Favorit digabung tanpa duplikasi saat login ke akun demo; penyimpanan akun hanya pada tab lokal.

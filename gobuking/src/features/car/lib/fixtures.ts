@@ -2,6 +2,7 @@ import { publicCarFixture } from '@/features/catalog/lib/runtime';
 import { LOCATIONS } from '@/features/home/lib/search';
 import type { CarOffer, CarClass, RentalMode } from './types';
 const models: {
+  id: string;
   vehicleClass: CarClass;
   name: string;
   seats: number;
@@ -10,6 +11,7 @@ const models: {
   rate: number;
 }[] = [
   {
+    id: 'city',
     vehicleClass: 'city',
     name: 'City Compact',
     seats: 5,
@@ -18,6 +20,7 @@ const models: {
     rate: 300000,
   },
   {
+    id: 'mpv',
     vehicleClass: 'mpv',
     name: 'Family MPV',
     seats: 7,
@@ -26,6 +29,7 @@ const models: {
     rate: 480000,
   },
   {
+    id: 'suv',
     vehicleClass: 'suv',
     name: 'Adventure SUV',
     seats: 5,
@@ -34,12 +38,22 @@ const models: {
     rate: 650000,
   },
   {
+    id: 'van',
     vehicleClass: 'van',
     name: 'Group Minibus',
     seats: 12,
     baggage: null,
     image: 'illustration-van',
     rate: 950000,
+  },
+  {
+    id: 'mpv-premium',
+    vehicleClass: 'mpv',
+    name: 'Premium Family MPV',
+    seats: 7,
+    baggage: 3,
+    image: 'car-suv',
+    rate: 560000,
   },
 ];
 export const CAR_OFFERS: CarOffer[] = LOCATIONS.flatMap((city) =>
@@ -48,7 +62,7 @@ export const CAR_OFFERS: CarOffer[] = LOCATIONS.flatMap((city) =>
       .filter((mode) => !(model.vehicleClass === 'van' && mode === 'self'))
       .map((mode) => ({
         ...model,
-        id: `${city.id}-${model.vehicleClass}-${mode}`,
+        id: `${city.id}-${model.id}-${mode}`,
         locationId: city.id,
         transmission: i === 3 ? ('manual' as const) : ('automatic' as const),
         providerId: i % 2 === 0 ? 'nusantara' : 'jelajah',

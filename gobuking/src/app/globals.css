@@ -473,6 +473,85 @@ input[type='radio'] {
   margin-top: 56px;
   margin-bottom: 56px;
 }
+.service-cards-section {
+  margin-top: 30px;
+}
+.service-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.service-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-slate-200);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 8px #0f172a08;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+.service-card:hover {
+  box-shadow: 0 12px 28px #1e40af16;
+  transform: translateY(-3px);
+}
+.service-card:focus-visible {
+  outline: 3px solid var(--color-blue-600);
+  outline-offset: 3px;
+}
+.service-card-image {
+  position: relative;
+  aspect-ratio: 2.15;
+  overflow: hidden;
+  background: var(--color-slate-100);
+}
+.service-card-icon,
+.service-card-arrow {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: white;
+  color: var(--color-blue-700);
+  box-shadow: 0 2px 8px #0f172a20;
+}
+.service-card-icon {
+  top: 12px;
+  left: 12px;
+}
+.service-card-arrow {
+  right: 12px;
+  bottom: 12px;
+}
+.service-card-copy {
+  padding: 16px 18px 18px;
+}
+.service-card-copy h3 {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.service-card-copy p {
+  min-height: 42px;
+  margin-top: 5px;
+  color: var(--color-slate-600);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.service-card-copy > span {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  margin-top: 8px;
+  color: var(--color-blue-700);
+  font-size: 12px;
+  font-weight: 700;
+}
 .section-heading {
   display: flex;
   align-items: end;
@@ -941,6 +1020,23 @@ input[type='radio'] {
   }
   .listing-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .service-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .service-card-copy {
+    padding: 13px;
+  }
+  .service-card-copy h3 {
+    font-size: 15px;
+  }
+  .service-card-copy p {
+    min-height: 60px;
+    font-size: 11px;
+  }
+  .service-card-image {
+    aspect-ratio: 1.55;
   }
   .why-section {
     grid-template-columns: 1fr;
