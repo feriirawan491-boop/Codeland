@@ -1,0 +1,123 @@
+.adm-module .ptr-page {
+  max-width: 1600px;
+}
+.adm-app .ptr-sidebar {
+  background: #172554;
+}
+.adm-app .ptr-brand small {
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+.adm-app .ptr-sidebar nav {
+  gap: 2px;
+}
+.adm-app .ptr-sidebar nav a {
+  padding-block: 9px;
+  min-height: 40px;
+  font-size: 11px;
+}
+.adm-app .ptr-org-mark {
+  margin-block: 20px 14px;
+  padding-bottom: 15px;
+}
+.adm-top-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #475569;
+  white-space: nowrap;
+}
+.adm-overview-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(115deg, #172554, #1e40af);
+  color: white;
+  border-radius: 17px;
+  padding: 28px 30px;
+  margin-bottom: 24px;
+}
+.adm-overview-banner h2 {
+  color: white;
+  font-size: 25px;
+  max-width: 580px;
+  margin: 10px 0;
+}
+.adm-overview-banner .ptr-eyebrow {
+  color: #bfdbfe;
+}
+.adm-overview-banner p {
+  color: #dbeafe;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.adm-overview-banner > svg {
+  flex-shrink: 0;
+  color: #93c5fd;
+}
+.adm-timeline {
+  border-left: 2px solid #dbeafe;
+  padding: 8px 0 8px 15px;
+  font-size: 12px;
+}
+.adm-module .ptr-table-region td {
+  max-width: 360px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 100px;
+}
+.adm-module .ptr-warning ul {
+  list-style: disc;
+  padding-left: 18px;
+  margin-top: 8px;
+}
+.adm-module .ptr-warning li {
+  padding: 3px 0;
+}
+.adm-module .ptr-kpi strong {
+  font-size: clamp(17px, 1.8vw, 27px);
+}
+@media (max-width: 1023px) {
+  .adm-top-label {
+    display: none;
+  }
+  .adm-app .ptr-topbar {
+    gap: 12px;
+  }
+  .adm-app .ptr-context {
+    max-width: none;
+  }
+  .adm-module .ptr-page-heading h1 {
+    font-size: 26px;
+  }
+}
+@media (max-width: 767px) {
+  .adm-overview-banner {
+    padding: 22px;
+  }
+  .adm-overview-banner h2 {
+    font-size: 22px;
+  }
+  .adm-overview-banner > svg {
+    display: none;
+  }
+  .adm-module .ptr-page-heading {
+    gap: 12px;
+  }
+  .adm-module .ptr-page-heading h1 {
+    font-size: 23px;
+  }
+  .adm-module .ptr-page-heading .ptr-button {
+    font-size: 11px;
+    padding: 9px;
+    flex-shrink: 0;
+  }
+  .adm-module .ptr-page-heading .ptr-button svg {
+    display: none;
+  }
+  .adm-module .ptr-context select {
+    font-size: 10px;
+  }
+}

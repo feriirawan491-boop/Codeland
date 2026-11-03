@@ -1,0 +1,172 @@
+.account-access {
+  color: var(--color-slate-900);
+  width: 100%;
+}
+.account-access-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--color-blue-50);
+  color: var(--color-blue-600);
+  margin-bottom: 18px;
+}
+.account-access h2 {
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+}
+.account-access > p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--color-slate-500);
+  margin-top: 8px;
+}
+.account-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  background: var(--color-slate-100);
+  gap: 5px;
+  border-radius: 12px;
+  margin: 22px 0;
+}
+.account-mode-switch button {
+  min-height: 44px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-slate-600);
+}
+.account-mode-switch button[aria-pressed='true'] {
+  background: white;
+  color: var(--color-blue-700);
+  box-shadow: 0 2px 5px #0f172a09;
+}
+.account-field {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+.account-field input {
+  min-height: 50px;
+  border: 1px solid var(--color-slate-300);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
+  min-width: 0;
+  background: white;
+  color: var(--color-slate-900);
+}
+.account-field input[aria-invalid='true'] {
+  border-color: var(--color-red-600);
+}
+.account-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--color-slate-600);
+  margin-top: 20px;
+}
+.account-terms input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  accent-color: var(--color-blue-600);
+}
+.account-access .account-demo-note {
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-slate-100);
+}
+.account-otp-hint {
+  padding: 12px 14px;
+  border: 1px solid var(--color-blue-100);
+  border-radius: 10px;
+  background: var(--color-blue-50);
+  font-size: 12px;
+  color: var(--color-blue-800);
+  line-height: 1.8;
+}
+.account-otp-email {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.account-back {
+  display: block;
+  min-height: 44px;
+  margin: 10px auto 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-blue-700);
+}
+.account-error {
+  border-radius: 10px;
+  background: var(--color-red-50);
+  color: var(--color-red-800);
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 14px;
+}
+.account-profile-name {
+  font-weight: 700;
+  color: var(--color-slate-900) !important;
+}
+.hotel-account-gate {
+  padding: 28px;
+  border: 1px solid var(--color-slate-200);
+  border-radius: 18px;
+  background: white;
+}
+.checkout-payment-options {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--color-slate-200);
+}
+.checkout-payment-options legend {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.checkout-payment-options > p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--color-slate-500);
+  margin-bottom: 16px;
+}
+.checkout-payment-options .payment-methods {
+  margin-top: 14px;
+}
+.checkout-payment-choice {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--color-slate-200);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+@media (max-width: 767px) {
+  .hotel-account-gate {
+    padding: 22px 18px;
+  }
+  .checkout-payment-options .payment-methods {
+    grid-template-columns: 1fr;
+  }
+}
